@@ -1,0 +1,14 @@
+{
+  "make": "Mazda",
+  "model": "2",
+  "year": 2008,
+  "engine": "1.3L ZJ-VE",
+  "thresholds": {
+    "max_coolant_temp": 100.0,
+    "max_stft": 5.0
+  },
+  "common_issues": [
+    "Thermostat sticking closed leading to localized thermal creep.",
+    "Degraded intake gaskets causing unmetered air leaks and fuel trim spikes."
+  ]
+}
