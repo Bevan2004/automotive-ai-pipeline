@@ -6,24 +6,24 @@ An offline-first, modular Python architecture designed to ingest real-time OBD-I
 
 ## Real-World Motivation & Background
 
-Working hands-on with cars daily—wrenching, tuning, and dealing with various chassis builds—highlighted a major frustration with commercial diagnostic tools: they are often slow, require constant cloud connectivity, or lock specific manufacturer troubleshooting data behind expensive enterprise software licenses. 
+Me and my best friend ran a car business and often worked on cars that had problems. We used a generic OBD scanner and found that to be too slow and impractical, always having to look up on the internet what the codes were so I engineered a programme that would just scan and tell me what the issue was.
 
-I built this pipeline to bridge that gap. Designed as a practical garage companion, it gives me instant, offline-first telemetry analysis and localized DTC translation across the different vehicles I work on. For prospective employers, this project demonstrates my ability to identify real-world friction points in a hands-on trade and engineer custom software solutions to solve them.
+I built this pipeline to bridge that gap. Designed as a practical garage companion, it not only ingests live telemetry but directly ingests and translates real engine trouble codes (DTCs) read from the car's OBD-II port. By matching raw error codes against an embedded SQLite database and combining them with brand-specific profiles, it gives me instant, offline-first diagnostics and localized maintenance insights across the different vehicles I work on.
 
 ---
 
-##  Architectural Overview
+## Architectural Overview
 
 Modern vehicle diagnostics often rely on cloud infrastructure, making them vulnerable in air-gapped or low-connectivity environments. This pipeline demonstrates edge computing principles by processing telemetry entirely locally using a decoupled, modular design:
 
-1. **`mock_obd.py`**: Simulates live ECU polling streams (RPM, coolant temperature, throttle position, and Short Term Fuel Trim), outputting structured CSV drive logs. (Easily swappable with physical hardware interfaces).
-2. **`vehicle_profile.json`**: A brand-specific configuration framework that dynamically adjusts operational safety thresholds and tracks model-specific chassis vulnerabilities for the cars I work on.
-3. **`detect_anomalies.py`**: Automatically initializes an embedded, offline **SQLite database** seeded with cross-brand DTC registries to flag thermal and fuel anomalies in real-time.
+1. **`mock_obd.py`**: Simulates live ECU polling streams (RPM, coolant temperature, throttle position, and Short Term Fuel Trim), outputting structured CSV drive logs. Made this for you to see how it is run however in reality a csv file exported from the OBD reader would be subbed in for this.
+2. **`vehicle_profile.json`**: A brand-specific configuration framework that dynamically adjusts operational safety thresholds and tracks model-specific chassis vulnerabilities for the cars I work on given by the diagnostic tool i plug into the OBD.
+3. **`detect_anomalies.py`**: Automatically initializes an embedded, offline **SQLite database** seeded with cross-brand DTC registries to flag thermal, fuel anomalies and fault codes in real-time.
 4. **`ai_diagnostician.py`**: Acts as a local RAG report synthesizer, combining peak telemetry metrics with manufacturer knowledge bases to generate comprehensive preventative maintenance summaries.
 
 ---
 
-##  Project Structure
+## Project Structure
 
 ```text
 automotive_ai_pipeline/
